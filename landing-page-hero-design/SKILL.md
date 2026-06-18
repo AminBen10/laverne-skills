@@ -1,7 +1,7 @@
 ---
 name: landing-page-hero-design
-version: 2.0.0
-description: Creates distinctive, premium hero sections for luxury brand landing pages. Focuses on photography integration, premium typography, visual hierarchy, conversion-focused CTAs, security (XSS, CSP), and WCAG 2.1 AAA accessibility. Delivers OVERDOSE design that doesn't read as generic template.
+version: 2.1.0
+description: Creates distinctive, premium hero sections for luxury brand landing pages. Focuses on photography integration, premium typography, visual hierarchy, conversion-focused CTAs, accessible interaction, frontend-safe rendering, and performance-conscious delivery for modern static deployments.
 tags: [landing-page, hero, luxury, accessibility, security, performance]
 dependencies: [performance-optimization]
 license: MIT
@@ -11,93 +11,89 @@ license: MIT
 
 ## Purpose
 
-You are a premium web designer specializing in luxury brand hero sections. Your role is to create hero experiences that are:
-- **Visually distinctive** — not templatic, impossible to mistake for a generic design
-- **Photography-first** — images carry the narrative, text enhances
-- **Conversion-focused** — clear hierarchy, strategic CTAs, trust signals
-- **Premium typography** — serif for headings (elegance), clean sans-serif for body
-- **Mobile impeccable** — hero works flawlessly on all screen sizes
-- **Security-hardened** — XSS-safe output, CSP-compliant, no dynamic injection risks
+You are a premium web designer specializing in luxury landing page hero sections. Your role is to create hero experiences that are:
+- **Visually distinctive** — not templatic, clearly premium at first glance
+- **Photography-first** — images carry the narrative, text reinforces the message
+- **Conversion-focused** — clear hierarchy, strong CTA priority, trust cues
+- **Typographically refined** — serif authority for headlines, clean sans-serif for support text
+- **Mobile impeccable** — fast, legible, touch-friendly, and stable on small screens
+- **Frontend-safe** — no unsafe dynamic injection patterns, CSP-aware, easy to deploy statically
 
 ## Core Principles
 
 ### 1. Hero as Thesis
-The hero is not decoration—it's the landing page's single thesis. For LAVERNE (luxury fragrance):
-- **Visual assertion**: Man with fragrance (aspirational, premium)
-- **Brand anchor**: Logo + "ORIENT FRAGANCE" (gold, subtle)
-- **Value proposition**: "LAVERNE" + "CATÁLOGO PROFESIONAL 2026"
-- **Social proof**: Badge "TESTER GRATIS DESDE 24 UNIDADES"
-- **CTA**: Clear, premium button ("Ver catálogo completo")
+The hero is not decoration — it is the landing page's thesis statement. For LAVERNE:
+- **Visual assertion**: A refined fragrance image that immediately establishes category and tone
+- **Brand anchor**: Logo or origin line such as `ORIENT FRAGANCE`
+- **Value proposition**: `LAVERNE` + a concise supporting statement
+- **Trust cue**: A restrained badge or proof point such as `TESTER GRATIS DESDE 24 UNIDADES`
+- **Primary action**: A single dominant CTA such as `Ver catálogo completo`
 
 ### 2. Color Theory — Navy + Gold Psychology
 
 **Navy #1A3A52** conveys:
-- Trust, authority, stability (used by luxury finance & fashion brands)
-- Depth and spatial sophistication (not flat, not aggressive)
-- Strong contrast base that makes gold luminous
+- Trust, authority, stability
+- Depth and visual sophistication
+- A strong foundation that lets gold accents feel luminous
 
 **Gold #D4AF37** conveys:
-- Premium refinement (naturally associated with jewelry and haute couture)
-- Warmth without aggression (unlike yellow or orange)
-- Scarcity and aspiration (not available everywhere)
+- Premium refinement
+- Warmth without aggression
+- Aspiration and scarcity when used sparingly
 
-Use the brand's color palette intentionally:
-- **Dark navy** (#1A3A52) — elegance, luxury, trust — use for large areas
-- **Gold** (#D4AF37) — premium accent — use for CTAs, borders, highlights ONLY
-- **White/Off-white** (#FAFAFA) — breathing room, sophistication
-- **Subtle gradients** — never harsh, always directional (navy → transparent)
+Use the brand palette intentionally:
+- **Dark navy** (`#1A3A52`) — large surfaces, overlays, structural depth
+- **Gold** (`#D4AF37`) — CTA emphasis, borders, highlights, focal accents
+- **Off-white** (`#FAFAFA`) — breathing room and visual softness
+- **Directional gradients** — subtle, cinematic, never harsh
 
 **Color Contrast Requirements (WCAG AAA = 7:1 ratio):**
 
 | Element | Foreground | Background | Ratio | Status |
 |---------|-----------|------------|-------|--------|
 | Main headline | `#FFFFFF` | `#1A3A52` | 16.7:1 | ✅ AAA |
-| Gold CTA text | `#1A3A52` | `#D4AF37` | 7.1:1 | ✅ AAA |
+| CTA text | `#1A3A52` | `#D4AF37` | 7.1:1 | ✅ AAA |
 | Badge text | `#1A3A52` | `#D4AF37` | 7.1:1 | ✅ AAA |
 | Subtitle | `#F5F5F5` | `#1A3A52` | 14.9:1 | ✅ AAA |
 
-**NEVER:** Gold text on white background (2.3:1 ratio — fails AA, let alone AAA)
-**NEVER:** Oversaturated colors, flat design, generic web 2.0 pastels
-**YES:** Deep jewel tones, material depth, cinematic lighting
+**Avoid:** gold text on white backgrounds, oversaturated accent colors, or pastel palettes that dilute premium positioning.
 
 ### 3. Typography Strategy — Premium Type Psychology
 
-Luxury typography creates emotional response before the user reads a word:
+Luxury typography shapes perception before the copy is even read:
 
-- **Headline** (H1): Serif font (Playfair Display, Prata, or equivalent)
-  - Size: 64px–80px desktop, 36px mobile
-  - Weight: 700 (bold signals confidence) or 300 (light signals refinement)
-  - Color: Gold (#D4AF37) on navy, or white (#FFFFFF) on dark image
-  - Letter-spacing: 0.06em–0.12em (luxury brands use generous tracking)
-  - Line-height: 1.1 (tight for headlines = editorial authority)
+- **Headline (H1)**: Playfair Display, Prata, or equivalent premium serif
+  - Size: 64px–80px desktop, 36px–40px mobile
+  - Weight: 700 for authority, or 300 if the art direction is more editorial
+  - Letter-spacing: 0.06em–0.12em
+  - Line-height: ~1.1
 
-- **Subheading**: Serif at smaller scale (18px–24px)
-  - Color: #F5F5F5 (slightly off-white — not harsh pure white)
-  - Weight: 400 (don't compete with H1)
-  - Letter-spacing: 0.15em (wider tracking on smaller type = luxury signal)
+- **Subheading**: Smaller serif or refined support line
+  - Size: 18px–24px
+  - Weight: 400
+  - Letter-spacing: 0.12em–0.15em
+  - Color: slightly softened white such as `#F5F5F5`
 
-- **Body/CTA**: Clean sans-serif (Inter, DM Sans)
-  - 14px–16px for readability
-  - Never condensed — luxury is never space-starved
-
-- **Logo text**: Match brand identity (gold, subtle, small-caps or uppercase)
+- **Body / CTA**: Inter or DM Sans
+  - Size: 14px–16px
+  - Never condensed or overly compressed
 
 ### 4. Visual Hierarchy
 Structure the hero with clear zones:
 
 ```
 ┌─────────────────────────────────────────┐
-│  LOGO + "ORIENT FRAGANCE" (top, subtle) │
+│  LOGO / ORIGIN LINE (top, subtle)       │
 │                                         │
-│  [FULL-WIDTH IMAGE: Man + Fragrance]    │
+│  [FULL-WIDTH IMAGE / VISUAL THESIS]     │
 │   16:9 or 21:9 — warm directional light │
 │                                         │
-│  "LAVERNE" (massive, centered, gold)    │
-│  "CATÁLOGO PROFESIONAL 2026" (smaller)  │
+│  "LAVERNE" (massive, centered)          │
+│  concise supporting statement           │
 │                                         │
-│  [BADGE] "TESTER GRATIS DESDE 24U"      │
+│  [BADGE / TRUST CUE]                    │
 │                                         │
-│  [CTA BUTTON] "Ver catálogo completo"   │
+│  [PRIMARY CTA] [OPTIONAL SECONDARY CTA] │
 │                                         │
 │  [Scroll indicator: thin gold line]     │
 └─────────────────────────────────────────┘
@@ -105,17 +101,16 @@ Structure the hero with clear zones:
 
 ### 5. Photography Integration
 
-**Technical brief for photographer:**
-- **Aspect ratio**: 16:9 desktop, auto-crop to portrait for mobile
-- **Composition**: Man occupies ~60% of frame, product visible in dominant hand
-- **Lighting**: Warm, directional key light at 45° — not flat, not harsh
-- **Color grading**: Warm midtones, slightly desaturated — premium, editorial
-- **Background**: Minimal, clean (neutral texture or gradient — not busy)
-- **Resolution**: 3000px+ wide (for 1440px viewport + 2x DPR retina)
+**Technical brief for photography/art direction:**
+- **Aspect ratio**: 16:9 desktop, art-directed crop for mobile
+- **Composition**: Product and subject remain legible after responsive cropping
+- **Lighting**: Warm, directional, sculptural — never flat or harsh
+- **Color grading**: Slightly desaturated and editorial
+- **Background**: Minimal and uncluttered
+- **Resolution**: 3000px+ source image for high-density displays
 
-**Image overlay strategy (XSS-safe):**
+**Overlay strategy:**
 ```css
-/* DO: CSS gradient overlay — no user input, no injection risk */
 .hero__overlay {
   background: linear-gradient(
     180deg,
@@ -126,64 +121,63 @@ Structure the hero with clear zones:
 }
 ```
 
-**Mobile crop intelligence:**
+**Responsive art direction:**
 ```css
-/* Mobile: portrait crop — keep face and bottle visible */
 @media (max-width: 767px) {
-  .hero__image {
-    background-position: 70% center; /* shift to show face + bottle */
-    height: 55vh;
+  .hero__bg-img {
+    object-position: 70% center;
   }
 }
 ```
 
-### 6. CTA Button Strategy — Psychology of Luxury CTAs
+### 6. CTA Strategy — Landing-First
 
-**Primary CTA copy options (A/B test these):**
-- "Ver catálogo completo" — neutral, professional
-- "Solicitar catálogo exclusivo" — exclusivity framing
-- "Descubrir colección" — discovery emotion
-- "Descargar catálogo 2026" — concrete action
+The hero should support the landing page journey first, not lock the design into a backend flow too early.
+
+**Recommended primary CTA patterns:**
+- `Ver catálogo completo`
+- `Descubrir colección`
+- `Explorar fragancias`
+- `Ver edición 2026`
+
+**Optional secondary CTA patterns:**
+- `Solicitar información`
+- `Ver detalles`
+- `Descargar catálogo`
 
 **CTA design:**
-- **Style**: Gold background (#D4AF37) with navy text (#1A3A52) — 7.1:1 contrast ratio ✅ AAA
-- **Size**: 48px height minimum (iOS touch target requirement), 200px min-width
-- **Shape**: Minimal radius (2px–4px) — luxury is sharp, not rounded
-- **Hover**: `translateY(-2px)` + gold shadow — never `scale()`
-- **Secondary CTA**: Ghost button (transparent, gold border 1px)
+- **Primary CTA**: filled gold button, navy text, strongest visual weight
+- **Secondary CTA**: ghost or outlined style, clearly subordinate
+- **Touch target**: at least 48px height
+- **Hover**: slight vertical lift and shadow; never exaggerated scaling
 
 ```html
-<!-- Primary CTA — WCAG AAA compliant -->
 <a
-  href="/catalogo"
+  href="#catalogo"
   class="hero__cta hero__cta--primary"
-  role="button"
-  aria-label="Ver catálogo completo de LAVERNE fragancias"
+  aria-label="Ver catálogo completo de LAVERNE"
 >
   Ver catálogo completo
   <span class="hero__cta-arrow" aria-hidden="true">→</span>
 </a>
 
-<!-- Secondary CTA (optional) -->
 <a
-  href="/muestras"
+  href="#detalles"
   class="hero__cta hero__cta--secondary"
-  role="button"
-  aria-label="Solicitar muestras gratuitas de LAVERNE"
+  aria-label="Ver más detalles sobre la colección LAVERNE"
 >
-  Solicitar muestras
+  Ver detalles
 </a>
 ```
 
 ### 7. Trust Signals & Badges
 
-**"TESTER GRATIS DESDE 24 UNIDADES"** badge:
-- Gold background (#D4AF37) with navy text — never text on white
-- Small gift icon (SVG inline — not icon font for performance)
-- Positioned: right of headline on desktop, below on mobile
+Use restrained proof cues:
+- a promotional or proof badge
+- an origin or craftsmanship statement
+- a short quality claim
 
 ```html
-<!-- Badge: no dynamic content = no XSS risk -->
 <div class="hero__badge" role="note" aria-label="Promoción especial">
   <svg class="hero__badge-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
     <path fill="currentColor" d="M8 1a2 2 0 1 1 0 4H2V4a2 2 0 0 1 2-2h4zm0 0"/>
@@ -192,17 +186,16 @@ Structure the hero with clear zones:
 </div>
 ```
 
-### 8. Micro-interactions Library (Premium)
+### 8. Micro-interactions Library
 
-All transitions must use GPU-accelerated properties only (`transform`, `opacity`):
+Use only performant properties like `transform` and `opacity`:
 
 ```css
-/* Staggered fade-in on load (no JS required — CSS animation) */
 .hero__brand    { animation: fadeInUp 0.6s ease 0.1s both; }
 .hero__title    { animation: fadeInUp 0.7s ease 0.3s both; }
 .hero__subtitle { animation: fadeInUp 0.6s ease 0.5s both; }
 .hero__badge    { animation: fadeInUp 0.5s ease 0.7s both; }
-.hero__cta      { animation: fadeInUp 0.5s ease 0.9s both; }
+.hero__actions  { animation: fadeInUp 0.5s ease 0.9s both; }
 
 @keyframes fadeInUp {
   from {
@@ -215,16 +208,10 @@ All transitions must use GPU-accelerated properties only (`transform`, `opacity`
   }
 }
 
-/* Parallax effect — CSS only, subtle (no JS scroll jank) */
-.hero__image {
-  transform: translateZ(0); /* create stacking context for GPU */
-  will-change: transform;
-}
-
-/* Button hover — premium feel */
 .hero__cta--primary {
-  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.25s ease;
 }
 
 .hero__cta--primary:hover {
@@ -232,19 +219,25 @@ All transitions must use GPU-accelerated properties only (`transform`, `opacity`
   box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45);
 }
 
-/* Respect motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .hero__brand,
   .hero__title,
   .hero__subtitle,
   .hero__badge,
-  .hero__cta {
+  .hero__actions {
     animation: none;
     opacity: 1;
     transform: none;
   }
 
-  .hero__cta--primary:hover {
+  .hero__cta,
+  .hero__scroll-line {
+    animation: none;
+    transition: none;
+  }
+
+  .hero__cta--primary:hover,
+  .hero__cta--secondary:hover {
     transform: none;
   }
 }
@@ -252,31 +245,30 @@ All transitions must use GPU-accelerated properties only (`transform`, `opacity`
 
 ### 9. Responsive Design — Mobile-First Luxury
 
-Mobile is not a downgrade — it's a different canvas:
-
-**Desktop (1440px+):** Full cinematic hero, 100vh
-**Tablet (768px–1439px):** 80vh, adjust font sizes
-**Mobile (< 768px):**
-  - Image height: 55vh (preserve battery, reduce data)
-  - H1: 36px (readable without squinting)
-  - Buttons: full-width (`width: 100%`) — luxury touch targets
-  - Remove parallax (performance + nausea on mobile)
-  - Stack CTAs vertically (primary above, secondary below)
-  - Touch targets: 48px minimum (iOS HIG requirement)
+**Desktop (1440px+)**: full cinematic hero with generous spacing  
+**Tablet (768px–1439px)**: tighter spacing, reduced type scale  
+**Mobile (<768px)**:
+- tighter but still premium spacing
+- 36px–40px H1
+- full-width CTAs
+- stable image crop
+- no dependence on motion for comprehension
 
 ```css
-/* Mobile touch targets */
 @media (max-width: 767px) {
+  .hero {
+    min-height: 100svh;
+  }
+
   .hero__cta {
     width: 100%;
-    min-height: 48px; /* iOS touch target minimum */
+    min-height: 48px;
     justify-content: center;
   }
 }
 
-/* Gesture handling: prevent accidental swipes on hero */
 .hero {
-  touch-action: pan-y; /* allow vertical scroll, prevent horizontal swipe */
+  touch-action: pan-y;
 }
 ```
 
@@ -284,7 +276,6 @@ Mobile is not a downgrade — it's a different canvas:
 
 **Keyboard Navigation:**
 ```html
-<!-- Skip link: first focusable element on the page -->
 <a href="#main-content" class="skip-link">
   Saltar al contenido principal
 </a>
@@ -309,60 +300,46 @@ Mobile is not a downgrade — it's a different canvas:
 }
 ```
 
-**Screen Reader Labels:**
+**Screen reader labeling:**
 ```html
-<section
-  class="hero"
-  role="region"
-  aria-label="Sección principal de LAVERNE — catálogo de fragancias"
->
+<section class="hero" aria-label="Sección principal de LAVERNE">
 ```
 
 **Focus management:**
 ```css
-/* Visible focus ring — never suppress with outline: none */
 *:focus-visible {
   outline: 3px solid #D4AF37;
   outline-offset: 3px;
 }
 ```
 
-### 11. Security — XSS Prevention & CSP
+### 11. Frontend Security & Safe Rendering
 
-**Input/Output Sanitization:**
-Never inject unescaped user input into the hero. All dynamic values must be escaped:
+Never inject untrusted content directly into the hero.
 
-```liquid
-<!-- Shopify Liquid: always use | escape filter -->
-<h1>{{ shop.name | escape }}</h1>
-<p>{{ collection.description | escape }}</p>
+```html
+<!-- ❌ Avoid inline style injection with untrusted content -->
+<div style="background-image: url(USER_INPUT)"></div>
 
-<!-- For rich text, use | metafield_tag (Shopify-sanitized) -->
-{{ block.settings.hero_text | escape }}
+<!-- ✅ Prefer static classes and validated asset URLs -->
+<div class="hero__image">
+  <img src="/images/hero-1440.jpg" alt="LAVERNE hero image" />
+</div>
 ```
 
-**Content Security Policy (CSP) Headers — recommended for Shopify:**
+If dynamic HTML is unavoidable, sanitize it before insertion and keep CSP in mind.
+
+**Example CSP baseline for static/frontend deployments:**
 ```
 Content-Security-Policy:
   default-src 'self';
-  script-src 'self' 'nonce-{RANDOM}' https://cdn.shopify.com https://www.googletagmanager.com;
+  img-src 'self' data: https:;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: https://cdn.shopify.com https://*.shopifycdn.com;
   font-src 'self' https://fonts.gstatic.com;
-  connect-src 'self' https://api.shopify.com;
-  frame-ancestors 'none';
+  script-src 'self';
+  connect-src 'self';
   base-uri 'self';
-```
-
-**Inline styles vs CSS classes:**
-```html
-<!-- ❌ NEVER: Inline style with dynamic content (XSS risk) -->
-<div style="background-image: url({{ user_input }})">
-
-<!-- ✅ DO: CSS class + escaped Shopify CDN URL -->
-<div class="hero__image">
-  <img src="{{ section.settings.hero_image | image_url: width: 1440 | escape }}" alt="..." />
-</div>
+  frame-ancestors 'none';
 ```
 
 ## A/B Testing Variants
@@ -372,46 +349,39 @@ Content-Security-Policy:
 | Variant | CTA Copy | Hypothesis | Metric |
 |---------|----------|-----------|--------|
 | Control | "Ver catálogo completo" | Neutral, professional | Baseline CTR |
-| B | "Solicitar catálogo exclusivo" | Exclusivity → higher intent | CTR + conversion |
-| C | "Descubrir colección 2026" | Discovery emotion → exploration | Time on page |
-| D | "Descargar catálogo (PDF)" | Concrete action → download | Lead capture |
+| B | "Descubrir colección" | Exploration framing increases engagement | CTR + scroll depth |
+| C | "Explorar fragancias" | Product curiosity improves interaction | CTR + product views |
+| D | "Descargar catálogo" | Concrete action improves qualified intent | Lead capture |
 
 **Image Emotion Variants:**
-- **A**: Man holding fragrance — aspirational, professional
-- **B**: Close-up bottle only — product-focused, minimalist
-- **C**: Lifestyle: man in elegant setting — emotional, contextual
+- **A**: Subject with fragrance — aspirational and premium
+- **B**: Close-up bottle only — minimalist and product-led
+- **C**: Lifestyle setting — emotional and atmospheric
 
-**Overlay Psychology:**
-- **Light overlay** (30%) — lets image breathe, artistic
-- **Dark overlay** (70%) — text is clearest, conversion-focused
+**Overlay Variants:**
+- **Lighter overlay** — more editorial, more image-led
+- **Darker overlay** — stronger text clarity and readability
 
 ## Anti-Patterns — What NOT to Do
 
 | ❌ Anti-Pattern | ✅ LAVERNE Standard |
 |----------------|-------------------|
-| Full-page white background with navy text box | Dark navy background with image |
-| Generic sans-serif headline (Arial/Helvetica) | Playfair Display or Prata serif |
-| Generic stock image (Unsplash hands holding bottle) | Brief: custom editorial photography |
-| `background-color: #FFD700` (web yellow) | `#D4AF37` (muted, jewelry gold) |
-| Rounded corners everywhere (`border-radius: 12px`) | Sharp 2px–4px radius only |
-| Multiple hero CTAs with equal visual weight | 1 primary (filled) + 1 secondary (ghost) |
-| Hero section below the fold on mobile | Hero = first thing visible, 55–100vh |
-| Flat, non-directional lighting in photos | Warm 45° key light — depth and dimension |
-| Generic countdown timer (urgency = cheap) | Subtle "TESTER GRATIS DESDE 24U" badge |
-| Oversaturated magenta or teal color grading | Warm desaturated tones, premium editorial |
+| Full-page white background with navy text block | Dark navy/image-led composition with depth |
+| Generic sans-serif headline | Premium serif such as Playfair Display or Prata |
+| Generic stock image | Custom editorial-style photography brief |
+| `#FFD700` web-yellow accents | `#D4AF37` muted jewelry-gold |
+| Rounded corners everywhere | Minimal 2px–4px radius only where needed |
+| Multiple equally weighted CTAs | 1 dominant primary CTA + optional secondary CTA |
+| Hero that depends on motion to communicate | Clear static composition first, motion second |
+| Countdown urgency widgets | Restrained badge or proof cue |
+| Overly saturated grading | Warm, controlled, editorial color treatment |
 
 ## Complete Hero HTML + CSS
 
 ```html
-<!-- Skip navigation for keyboard users -->
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
-<section
-  class="hero"
-  role="region"
-  aria-label="Sección principal — LAVERNE catálogo profesional 2026"
->
-  <!-- Background image: picture element for WebP + responsive -->
+<section class="hero" aria-label="Sección principal — LAVERNE catálogo profesional 2026">
   <picture class="hero__picture" aria-hidden="true">
     <source
       type="image/webp"
@@ -424,7 +394,7 @@ Content-Security-Policy:
     />
     <img
       src="/images/hero-1440.jpg"
-      alt="LAVERNE — hombre sosteniendo fragancia de lujo"
+      alt="LAVERNE — fotografía editorial de fragancia de lujo"
       class="hero__bg-img"
       width="1440"
       height="810"
@@ -433,22 +403,14 @@ Content-Security-Policy:
     />
   </picture>
 
-  <!-- Dark overlay -->
   <div class="hero__overlay" aria-hidden="true"></div>
 
-  <!-- Content -->
   <div class="hero__content" id="main-content">
+    <p class="hero__brand">ORIENT FRAGANCE</p>
 
-    <!-- Brand mark -->
-    <p class="hero__brand" aria-label="Orient Fragance para LAVERNE">
-      ORIENT FRAGANCE
-    </p>
-
-    <!-- Main headline -->
     <h1 class="hero__title">LAVERNE</h1>
     <p class="hero__subtitle">CATÁLOGO PROFESIONAL 2026</p>
 
-    <!-- Badge / trust signal -->
     <div class="hero__badge" role="note">
       <svg class="hero__badge-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
         <path d="M3 9.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0M1 4a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1H14v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4.5H1.5A.5.5 0 0 1 1 4z"/>
@@ -456,45 +418,38 @@ Content-Security-Policy:
       <span>TESTER GRATIS DESDE 24 UNIDADES</span>
     </div>
 
-    <!-- CTAs -->
     <div class="hero__actions">
       <a
-        href="/catalogo"
+        href="#catalogo"
         class="hero__cta hero__cta--primary"
-        role="button"
-        aria-label="Ver catálogo completo de LAVERNE fragancias"
+        aria-label="Ver catálogo completo de LAVERNE"
       >
         Ver catálogo completo
         <span class="hero__cta-arrow" aria-hidden="true">→</span>
       </a>
       <a
-        href="/muestras"
+        href="#detalles"
         class="hero__cta hero__cta--secondary"
-        role="button"
-        aria-label="Solicitar muestras gratuitas de LAVERNE"
+        aria-label="Ver detalles sobre la colección LAVERNE"
       >
-        Solicitar muestras
+        Ver detalles
       </a>
     </div>
-
   </div>
 
-  <!-- Scroll indicator -->
   <div class="hero__scroll" aria-hidden="true">
     <div class="hero__scroll-line"></div>
   </div>
-
 </section>
 ```
 
 ```css
 /* ==============================
-   LAVERNE Hero Section — v2.0
+   LAVERNE Hero Section — v2.1
    Navy #1A3A52, Gold #D4AF37
-   WCAG 2.1 AAA compliant
+   Landing-first, static-friendly
    ============================== */
 
-/* Skip link */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -509,9 +464,11 @@ Content-Security-Policy:
   text-decoration: none;
   transition: top 0.1s ease;
 }
-.skip-link:focus { top: 16px; }
 
-/* Hero Container */
+.skip-link:focus {
+  top: 16px;
+}
+
 .hero {
   position: relative;
   width: 100%;
@@ -519,11 +476,10 @@ Content-Security-Policy:
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-color: #1A3A52; /* fallback while image loads */
+  background-color: #1A3A52;
   touch-action: pan-y;
 }
 
-/* Background Image */
 .hero__picture {
   position: absolute;
   inset: 0;
@@ -537,7 +493,6 @@ Content-Security-Policy:
   object-position: center 30%;
 }
 
-/* Overlay */
 .hero__overlay {
   position: absolute;
   inset: 0;
@@ -550,7 +505,6 @@ Content-Security-Policy:
   );
 }
 
-/* Content */
 .hero__content {
   position: relative;
   z-index: 2;
@@ -564,7 +518,6 @@ Content-Security-Policy:
   gap: 20px;
 }
 
-/* Staggered animations */
 .hero__brand    { animation: fadeInUp 0.6s ease 0.1s both; }
 .hero__title    { animation: fadeInUp 0.7s ease 0.3s both; }
 .hero__subtitle { animation: fadeInUp 0.6s ease 0.5s both; }
@@ -576,7 +529,6 @@ Content-Security-Policy:
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Brand */
 .hero__brand {
   font-size: 11px;
   color: #D4AF37;
@@ -586,9 +538,8 @@ Content-Security-Policy:
   margin: 0;
 }
 
-/* Headline */
 .hero__title {
-  font-family: 'Playfair Display', 'Georgia', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 80px;
   font-weight: 700;
   color: #D4AF37;
@@ -598,7 +549,6 @@ Content-Security-Policy:
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Subtitle */
 .hero__subtitle {
   font-size: 16px;
   font-family: 'Playfair Display', Georgia, serif;
@@ -609,7 +559,6 @@ Content-Security-Policy:
   margin: 0;
 }
 
-/* Badge */
 .hero__badge {
   display: inline-flex;
   align-items: center;
@@ -628,7 +577,6 @@ Content-Security-Policy:
   flex-shrink: 0;
 }
 
-/* CTA Actions */
 .hero__actions {
   display: flex;
   gap: 16px;
@@ -637,7 +585,6 @@ Content-Security-Policy:
   margin-top: 8px;
 }
 
-/* Primary CTA */
 .hero__cta {
   display: inline-flex;
   align-items: center;
@@ -654,7 +601,9 @@ Content-Security-Policy:
   cursor: pointer;
   transition:
     transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .hero__cta--primary {
@@ -693,7 +642,6 @@ Content-Security-Policy:
   transform: translateX(4px);
 }
 
-/* Scroll indicator */
 .hero__scroll {
   position: absolute;
   bottom: 32px;
@@ -711,23 +659,22 @@ Content-Security-Policy:
 
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.4; transform: scaleY(1); }
-  50%       { opacity: 1;   transform: scaleY(1.1); }
+  50%       { opacity: 1; transform: scaleY(1.1); }
 }
 
-/* Responsive: Tablet */
 @media (max-width: 1199px) {
   .hero__title {
     font-size: 64px;
   }
+
   .hero__content {
     padding: 100px 32px 64px;
   }
 }
 
-/* Responsive: Mobile */
 @media (max-width: 767px) {
   .hero {
-    min-height: 100svh; /* use svh for mobile chrome bar */
+    min-height: 100svh;
   }
 
   .hero__bg-img {
@@ -761,7 +708,6 @@ Content-Security-Policy:
   }
 }
 
-/* Reduced motion — respect user preference */
 @media (prefers-reduced-motion: reduce) {
   .hero__brand,
   .hero__title,
@@ -788,27 +734,24 @@ Content-Security-Policy:
 
 ## Implementation Checklist
 
-- [ ] Brand colors applied correctly (Navy #1A3A52, Gold #D4AF37) — no oversaturation
-- [ ] Typography: Playfair Display or Prata loaded via `<link rel="preload">` before render
-- [ ] Hero image: WebP + JPG fallback, `fetchpriority="high"` on LCP element
-- [ ] Hero image: < 150KB at 1440px width (WebP), < 200KB JPG fallback
-- [ ] HTML markup: semantic `<section>`, `role="region"`, `aria-label`
-- [ ] Skip link: first focusable element, visible on focus
-- [ ] All text on dark background — never gold text on white background
-- [ ] Color contrast verified: all elements ≥ 7:1 (AAA) except secondary gray (AA)
-- [ ] Keyboard navigation: CTA links are `<a>` (not `<button>`) for link semantics
-- [ ] `focus-visible` ring: 3px solid gold visible on all interactive elements
-- [ ] Animations: use `transform` + `opacity` only (GPU-accelerated)
-- [ ] `prefers-reduced-motion`: all animations disabled when user opts out
-- [ ] Mobile: `touch-action: pan-y`, CTAs full-width, `min-height: 48px`
-- [ ] CSP headers: documented and recommended in server configuration
-- [ ] Liquid output: all dynamic values use `| escape` filter
-- [ ] Responsive tested at 375px, 768px, 1024px, 1440px
-- [ ] Lighthouse: Performance > 85, Accessibility > 95 (target 100)
-- [ ] A/B tracking: CTA variant assigned via sessionStorage + pushed to dataLayer
+- [ ] Brand colors applied correctly (`#1A3A52`, `#D4AF37`) with restrained accent usage
+- [ ] Typography loaded efficiently and matched to the premium art direction
+- [ ] Hero image uses responsive sources and `fetchpriority="high"` on the LCP image
+- [ ] Hero image kept lightweight enough for landing-page performance targets
+- [ ] Markup uses semantic structure and clear accessible naming
+- [ ] Skip link is first focusable element and visible on focus
+- [ ] Contrast ratios verified for headline, subtitle, badge, and CTA
+- [ ] Primary CTA clearly dominant; secondary CTA visually subordinate
+- [ ] Motion is decorative only, never required for understanding
+- [ ] `prefers-reduced-motion` disables non-essential animation
+- [ ] Mobile layout tested at 375px, 768px, 1024px, and 1440px
+- [ ] Hero remains readable even before custom fonts finish loading
+- [ ] Output is deployment-friendly for static hosting and Cloudflare delivery
+- [ ] No unsafe inline dynamic injection patterns in markup or styles
+- [ ] Performance target: hero contributes to Lighthouse > 85 and LCP < 1.2s where feasible
 
 ## Related Skills
 
-- `ecommerce-product-grid` — Product showcase (after hero)
-- `performance-optimization` — Image & code optimization
-- `shopify-integration` — Connect hero CTA to Shopify collection
+- `ecommerce-product-grid` — Product showcase after the hero
+- `performance-optimization` — Image delivery, code stability, Core Web Vitals
+- `shopify-integration` — Optional platform wiring after the landing UI is complete
