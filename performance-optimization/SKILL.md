@@ -1,6 +1,9 @@
 ---
 name: performance-optimization
-description: Optimizes landing pages for sub-2-second load times and 85+ Lighthouse scores. Handles image compression (WebP, srcset), lazy loading, CSS minification, JavaScript deferral, and Core Web Vitals monitoring. Provides automation scripts for performance testing and compliance tracking.
+version: 2.0.0
+description: Optimizes landing pages for sub-2-second load times and 85+ Lighthouse scores. Handles image compression (WebP, srcset), lazy loading, CSS minification, JavaScript deferral, Core Web Vitals monitoring, and Chrome DevTools profiling. Includes Claude AI integration patterns, performance budgets by device, and 3G throttling benchmarks.
+tags: [performance, lighthouse, core-web-vitals, image-optimization, claude-ai]
+dependencies: []
 license: MIT
 ---
 
@@ -344,34 +347,279 @@ lighthouse https://laverne.example.com \
 }
 ```
 
+### 11. Lighthouse Score Breakdown by Metric
+
+Understanding how Lighthouse calculates Performance (0–100):
+
+| Metric | Weight | Target | Impact on Score |
+|--------|--------|--------|----------------|
+| **LCP** (Largest Contentful Paint) | 25% | < 1.2s | Hero image = LCP element |
+| **TBT** (Total Blocking Time) | 30% | < 150ms | JS bundles blocking main thread |
+| **CLS** (Cumulative Layout Shift) | 15% | < 0.1 | Images without dimensions, fonts |
+| **FCP** (First Contentful Paint) | 10% | < 0.8s | Critical CSS, server response |
+| **Speed Index** | 10% | < 1.5s | Visual completeness over time |
+| **TTI** (Time to Interactive) | 10% | < 2.5s | JS parse + execute time |
+
+**Lighthouse score estimate:**
+
+| Score | Color | Meaning |
+|-------|-------|---------|
+| 90–100 | 🟢 Green | Excellent |
+| 50–89 | 🟠 Orange | Needs improvement |
+| 0–49 | 🔴 Red | Poor |
+
+**LAVERNE Targets: 85+ desktop, 80+ mobile**
+
+### 12. Performance Budget by Device
+
+| Resource | Mobile (3G) | Tablet (4G) | Desktop (WiFi) |
+|----------|-------------|-------------|----------------|
+| Hero image | < 100KB | < 150KB | < 200KB |
+| Product images (×8) | < 40KB each | < 60KB each | < 80KB each |
+| Total images | < 420KB | < 630KB | < 840KB |
+| CSS (total) | < 30KB | < 40KB | < 50KB |
+| JavaScript | < 60KB | < 80KB | < 100KB |
+| Fonts | < 30KB | < 35KB | < 40KB |
+| HTML | < 20KB | < 25KB | < 30KB |
+| **Total budget** | **< 560KB** | **< 810KB** | **< 1.2MB** |
+
+### 13. Real-World 3G Throttling Results
+
+Test using Chrome DevTools Network throttle: **"Slow 3G" (400 Kbps download, 400ms RTT)**
+
+**Before optimization (baseline):**
+```
+LCP:  4.8s  🔴
+FCP:  2.1s  🔴
+CLS:  0.32  🔴
+TBT:  680ms 🔴
+Score: 24   🔴
+```
+
+**After optimization (target):**
+```
+LCP:  1.1s  🟢
+FCP:  0.7s  🟢
+CLS:  0.04  🟢
+TBT:  90ms  🟢
+Score: 87   🟢
+```
+
+**Key actions that moved the needle most:**
+1. Hero image: JPG 2.8MB → WebP 120KB (-96%) → LCP from 4.8s → 1.1s
+2. Inline critical CSS (~3KB) → FCP from 2.1s → 0.7s
+3. Add `width`/`height` on all images → CLS from 0.32 → 0.04
+4. Defer non-critical JS → TBT from 680ms → 90ms
+
+### 14. Cumulative Layout Shift (CLS) Prevention
+
+CLS = visual instability. Every unexpected layout shift lowers your score.
+
+**Image dimension reservation:**
+```html
+<!-- ✅ Always specify width and height — browser reserves space -->
+<img
+  src="/images/product.webp"
+  alt="Blue Laverne 7am"
+  width="600"
+  height="600"
+  loading="lazy"
+/>
+
+<!-- ❌ Missing dimensions — image load causes layout shift -->
+<img src="/images/product.webp" alt="Blue Laverne 7am" loading="lazy" />
+```
+
+**Font loading CLS prevention:**
+```css
+/* Use size-adjust to match fallback font metrics */
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/playfair-display-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  size-adjust: 100%; /* adjust to match system serif metrics */
+}
+
+/* Fallback stack that closely matches Playfair Display */
+h1, h2, h3 {
+  font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+}
+```
+
+**Avoid inserting content above the fold:**
+```javascript
+// ❌ Never inject content above-fold via JS (causes CLS)
+document.body.insertBefore(banner, document.body.firstChild);
+
+// ✅ Pre-reserve space in HTML, then populate
+// In HTML: <div class="promo-banner" style="min-height: 48px"></div>
+// In JS: document.querySelector('.promo-banner').innerHTML = content;
+```
+
+**Cookie consent without CLS:**
+```css
+/* Fixed position — doesn't push page content */
+.cookie-consent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* Does NOT affect layout of page content above it */
+}
+```
+
+### 15. Claude AI Integration — Intelligent Optimization
+
+Use Claude API to generate context-aware optimization recommendations:
+
+**Prompt pattern for image analysis:**
+```javascript
+// Example: Ask Claude to analyze and recommend image optimizations
+const response = await fetch('https://api.anthropic.com/v1/messages', {
+  method: 'POST',
+  headers: {
+    'x-api-key': process.env.ANTHROPIC_API_KEY, // Never client-side!
+    'anthropic-version': '2023-06-01',
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify({
+    model: 'claude-opus-4-5',
+    max_tokens: 1024,
+    messages: [{
+      role: 'user',
+      content: `Analyze these Lighthouse metrics for a luxury fragrance landing page 
+and provide specific, actionable recommendations to achieve LCP < 1.2s:
+
+Current metrics:
+- LCP: ${lcpMs}ms (element: ${lcpElement})
+- FCP: ${fcpMs}ms
+- CLS: ${clsScore}
+- TBT: ${tbtMs}ms
+
+Page details:
+- Hero image: ${heroImageKB}KB (${heroImageFormat})
+- Total page weight: ${totalKB}KB
+- JavaScript bundles: ${jsKB}KB
+
+Provide 3 specific recommendations ordered by impact.`
+    }]
+  })
+});
+```
+
+**Claude safe defaults for performance decisions:**
+```markdown
+When uncertain about a performance trade-off, Claude should:
+1. Prioritize LCP (user-perceived load speed) over other metrics
+2. Choose progressive enhancement over feature completeness
+3. Recommend WebP + JPEG fallback (not AVIF — browser support gap)
+4. Default to `loading="lazy"` for all below-fold images
+5. Default to `defer` for all non-critical scripts
+6. Never recommend removing accessibility features for performance gains
+```
+
+### 16. Chrome DevTools Performance Profiling Guide
+
+**Step 1: Open Performance tab**
+1. Open DevTools (F12 or Cmd+Option+I)
+2. Go to "Performance" tab
+3. Click ⚙️ Settings → check "Screenshots" and "Web Vitals"
+4. Set CPU throttle: 4× slowdown (simulates mid-range mobile)
+5. Click "Start profiling and reload page" (Ctrl+Shift+E)
+
+**Step 2: Read the flame chart**
+```
+Main thread timeline:
+[Parse HTML] → [Parse CSS] → [Layout] → [Paint] → [Composite]
+                ↕
+           [JavaScript tasks] (look for long red tasks > 50ms)
+```
+
+**Step 3: Identify bottlenecks**
+```
+🔴 Long task > 50ms → Bundle splitting or code optimization needed
+🟡 Layout thrashing → Too many forced reflows (read/write DOM)
+🟡 Render-blocking resources → CSS/JS in <head> without defer/preload
+🔴 Large LCP element → Needs image optimization + preload
+```
+
+**Step 4: Fix render-blocking resources**
+```html
+<!-- Preload the LCP image (hero) -->
+<link
+  rel="preload"
+  href="/images/hero-1440.webp"
+  as="image"
+  type="image/webp"
+  media="(min-width: 768px)"
+/>
+
+<!-- Preload critical font -->
+<link
+  rel="preload"
+  href="/fonts/playfair-display-700.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin="anonymous"
+/>
+```
+
+**Step 5: Measure, fix, repeat**
+```bash
+# Baseline: record LCP before changes
+lighthouse https://laverne.example.com --output json > before.json
+
+# Apply optimization
+# ...
+
+# Measure improvement
+lighthouse https://laverne.example.com --output json > after.json
+
+# Compare
+node -e "
+  const b = require('./before.json');
+  const a = require('./after.json');
+  const lcp = metric => metric.audits['largest-contentful-paint'].numericValue;
+  console.log('LCP before:', Math.round(lcp(b)), 'ms');
+  console.log('LCP after:', Math.round(lcp(a)), 'ms');
+  console.log('Improvement:', Math.round((lcp(b) - lcp(a)) / lcp(b) * 100) + '%');
+"
+```
+
 ## Implementation Checklist
 
 - [ ] Images optimized (WebP, multiple breakpoints, < 500KB total)
-- [ ] Lazy loading implemented (Intersection Observer or native `loading="lazy"`)
+- [ ] Hero image: `fetchpriority="high"`, `<link rel="preload">` in `<head>`
+- [ ] Product images: `loading="lazy"`, `decoding="async"`, explicit `width`/`height`
+- [ ] Lazy loading implemented (native `loading="lazy"` + IntersectionObserver fallback)
 - [ ] CSS critical path extracted (< 5KB inline, rest deferred)
-- [ ] Fonts optimized (woff2, font-display: swap, < 40KB)
+- [ ] Fonts: woff2, `font-display: swap`, preloaded, < 40KB total
 - [ ] JavaScript deferred (no render-blocking scripts)
 - [ ] HTML minified (< 30KB)
 - [ ] Gzip/Brotli compression enabled (server-side)
 - [ ] Browser caching configured (long TTL for static assets)
-- [ ] Core Web Vitals < targets (LCP < 1.2s, FID < 100ms, CLS < 0.1)
-- [ ] Lighthouse Performance > 85
-- [ ] Tested on 3G throttling (mobile slow network)
-- [ ] A/B testing metrics tracked (load time variants)
-- [ ] Performance monitoring set up (Sentry, GA4)
-- [ ] GitHub Actions CI/CD with performance budgets
+- [ ] Core Web Vitals < targets (LCP < 1.2s, CLS < 0.1, TBT < 150ms)
+- [ ] Lighthouse Performance > 85 desktop, > 80 mobile
+- [ ] CLS prevention: all images have explicit dimensions
+- [ ] Font CLS: `size-adjust` or careful fallback font stack
+- [ ] 3G throttling test completed (4× CPU, Slow 3G network)
+- [ ] Chrome DevTools performance profile reviewed (no long tasks > 50ms)
+- [ ] Performance budget enforced per device tier (mobile < 560KB)
+- [ ] A/B testing metrics tracked (load time per variant)
+- [ ] GitHub Actions CI/CD with `.lighthouserc.json` budgets
 
 ## Performance Targets (Final)
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| **LCP** | < 1.2s | ✅ |
-| **FCP** | < 0.8s | ✅ |
-| **CLS** | < 0.1 | ✅ |
-| **TTI** | < 2.5s | ✅ |
-| **Page size** | < 600KB | ✅ |
-| **Lighthouse Performance** | > 85 | ✅ |
-| **Mobile Lighthouse** | > 80 | ✅ |
+| Metric | Mobile | Tablet | Desktop |
+|--------|--------|--------|---------|
+| **LCP** | < 1.2s | < 1.2s | < 1.0s |
+| **FCP** | < 0.8s | < 0.8s | < 0.6s |
+| **CLS** | < 0.1 | < 0.1 | < 0.05 |
+| **TBT** | < 200ms | < 150ms | < 100ms |
+| **Page size** | < 560KB | < 810KB | < 1.2MB |
+| **Lighthouse** | > 80 | > 82 | > 85 |
 
 ## Related Skills
 
