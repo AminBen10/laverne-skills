@@ -1,160 +1,143 @@
 ---
 name: landing-page-hero-design
-description: Creates distinctive, premium hero sections for luxury brand landing pages. Focuses on photography integration, premium typography, visual hierarchy, and conversion-focused CTAs. Delivers OVERDOSE design that doesn't read as generic template.
+description: Skill para generar hero sections premium “OVERDOSE” para LAVERNE (no genéricas). Produces production-ready HTML/CSS and optional Shopify Liquid, with assets manifest, Canva templates, and Higgsfield pipeline metadata.
 license: MIT
+version: 1.1.0
+tags: [hero, design, luxury, claude-code, canva, higgsfield]
+dependencies: [superpowers:>=1.0.0]
+outputs_schema: |
+  {
+    "type": "object",
+    "properties": {
+      "files": {
+        "type": "array",
+        "items": {"type": "object", "properties": {"path": {"type": "string"}, "language": {"type":"string"}, "content": {"type":"string"}}}
+      },
+      "assets": {
+        "type": "array",
+        "items": {"type": "object", "properties": {"name": {"type":"string"}, "purpose": {"type":"string"}, "srcset": {"type":"array","items":{"type":"string"}}}}
+      },
+      "preview_html": {"type": "string"},
+      "canva_template_instructions": {"type":"string"}
+    },
+    "required": ["files","assets","preview_html"]
+  }
 ---
 
-# Landing Page Hero Design
+# Skill: Landing Page Hero Design (LAVERNE)
 
-## Purpose
+Resumen
 
-You are a premium web designer specializing in luxury brand hero sections. Your role is to create hero experiences that are:
-- **Visually distinctive** — not templatic, impossible to mistake for a generic design
-- **Photography-first** — images carry the narrative, text enhances
-- **Conversion-focused** — clear hierarchy, strategic CTAs, trust signals
-- **Premium typography** — serif for headings (elegance), clean sans-serif for body
-- **Mobile impeccable** — hero works flawlessly on all screen sizes
+Este skill instruye a Claude Code a generar hero sections premium para LAVERNE — resultado listo para usar (HTML/CSS y opcional Liquid) y activos preparados para Canva/Higgsfield.
 
-## Core Principles
+Objetivos clave
+- No generar plantillas genéricas: diseño "OVERDOSE" — lujo, tipografía de alta gama, materiales y micro‑interacciones sutiles.
+- Cumplir metas de performance y accesibilidad: LCP < 1.2s, Lighthouse Performance ≥ 85, WCAG 2.1 AA/AAA donde sea factible.
+- Entregar salida estructurada que pueda ser consumida por pipelines (Higgsfield) y editores de diseño (Canva).
 
-### 1. Hero as Thesis
-The hero is not decoration—it's the landing page's single thesis. For LAVERNE (luxury fragrance):
-- **Visual assertion**: Man with fragrance (aspirational, premium)
-- **Brand anchor**: Logo + "ORIENT FRAGANCE" (gold, subtle)
-- **Value proposition**: "LAVERNE" + "CATÁLOGO PROFESIONAL 2026"
-- **Social proof**: Badge "TESTER GRATIS DESDE 24 UNIDADES"
-- **CTA**: Clear, premium button ("Ver catálogo completo")
+Cuando usarlo
+- Solicitar "Crear hero premium para LAVERNE" en Claude Code cuando se necesite un hero para landing pages que vaya directo a deploy o a conversión en Shopify.
 
-### 2. Color & Material
-Use the brand's color palette intentionally:
-- **Dark navy** (#1A3A52) — elegance, luxury, trust
-- **Gold** (#D4AF37) — premium accent, jewelry-like refinement
-- **White/Off-white** — breathing room, sophistication
-- **Subtle gradients** — never harsh, always tasteful
+Integraciones incluidas
+- Canva: instrucciones para crear un artboard/template con paleta (Navy #1A3A52, Gold #D4AF37), guías de tipografía y export presets.
+- Higgsfield: metadata para pipeline (asset names, sizes, lqip, alt text) y manifest compatible.
 
-NO: Oversaturated colors, flat design, generic web 2.0 pastels
-YES: Deep jewel tones, material depth, cinematic lighting
+Formato de salida (obligatorio)
+- JSON con la siguiente estructura (ejemplo en "Ejemplo de respuesta"):
+  - files: [{ path, language, content }] → archivos a crear (hero.html, hero.css, hero.liquid)
+  - assets: [{ name, purpose, srcset }] → manifest de imágenes (hero-640.webp, hero-1024.webp, etc.)
+  - preview_html: HTML simplificado para previsualizar
+  - canva_template_instructions: instrucciones para crear template en Canva
 
-### 3. Typography Strategy
-- **Headline** (H1): Serif font (Playfair Display, Prata, or equivalent)
-  - Size: 60px–80px desktop, 36px mobile
-  - Weight: Bold or Light (extremes > middle)
-  - Color: Gold or white (high contrast vs. background)
-- **Subheading**: Serif at smaller scale (20px–24px)
-  - Color: White or light gray
-- **Body/CTA**: Clean sans-serif (Inter, Lora, or equivalent)
-  - 14px–16px for readability
-- **Logo text**: Match brand identity (gold, subtle)
+Parámetros de entrada (prompt-friendly)
+- brand_name (string) — p.ej. "LAVERNE"
+- headline (string)
+- subtitle (string)
+- cta_primary (string)
+- badge_text (string) — p.ej. "TESTER GRATIS DESDE 24 UNIDADES"
+- hero_image_description (string) — descripción para búsqueda/escena (man holding fragrance, warm lighting)
+- variants (int) — cantidad de variantes A/B (default 2)
+- output_format (string) — "html", "liquid", "both" (default: "both")
+- canva_integration (boolean) — si true, incluye instrucciones y assets listos para Canva
+- higgsfield_integration (boolean) — si true, incluye metadata para pipeline
 
-### 4. Visual Hierarchy
-Structure the hero with clear zones:
+Reglas estrictas (NO NEGOTIABLE)
+- No generar scripts inline que exfiltren datos ni código de tracking por defecto.
+- No imágenes embebidas en base64; solo referencias a assets/manifest con nombres y tamaños.
+- Los tamaños de imagen deben respetar el presupuesto: hero responsive: 640/1024/1440, hero <= 200KB WebP por breakpoint.
+- Siempre proveer `width` y `height` en las etiquetas `img` (reserva espacio para CLS).
+- Escapar todo contenido dinámico en Liquid: use `{{ var | escape }}`.
 
-```
-┌─────────────────────────────────────────┐
-│  LOGO + "ORIENT FRAGANCE" (top, subtle) │
-│                                         │
-│  [FULL-WIDTH IMAGE: Man + Fragrance]    │
-│                                         │
-│  "LAVERNE" (massive, centered)          │
-│  "CATÁLOGO PROFESIONAL 2026" (smaller)  │
-│                                         │
-│  [BADGE] "TESTER GRATIS DESDE 24U"      │
-│                                         │
-│  [CTA BUTTON] "Ver catálogo completo"   │
-│                                         │
-│  [Scroll indicator or decorative line]  │
-└─────────────────────────────────────────┘
-```
+Diseño & UX (Directrices de marca)
+- Colores: Navy #1A3A52 (fondo o overlay), Gold #D4AF37 (accento), Off-white #F5F5F5
+- Tipografía: Serif para H1 (Playfair Display o Prata), Sans-serif para body (Inter)
+- Jerarquía: H1 enorme (60–80px desktop, 36px mobile), CTA prominente (48px altura), badge pequeño pero legible
+- Micro‑interacciones: fade-in 0.8s stagger, CTA hover (scale 1.02, soft glow), parallax opcional pero desactivable en mobile
 
-### 5. Photography Integration
-- **Aspect ratio**: 16:9 or 21:9 (cinema-like)
-- **Composition**: Man occupies ~60% of frame, product visible in hand
-- **Lighting**: Warm, directional lighting (not flat studio)
-- **Color grading**: Warm tones, slightly desaturated (premium feel)
-- **Overlay**: Subtle dark gradient (45°, navy to transparent) to ensure text readability
-- **Mobile**: Crop intelligently (portrait-oriented on small screens)
+Accesibilidad
+- Contrast ratio >= 4.5:1 para textos principales
+- Alt text descriptivo para imágenes
+- Focus visible para botones (outline con color gold rgba)
+- Keyboard accessible (tab order lógico)
 
-### 6. CTA Button Strategy
-- **Primary CTA**: "Ver catálogo completo" or "Descargar catálogo"
-- **Style**: Gold button with navy text (high contrast, premium)
-- **Size**: 48px height (large enough for mobile touch)
-- **Hover**: Subtle scale (+2%), slight glow, smooth transition (300ms)
-- **Secondary CTA** (optional): "Solicitar muestras" (outline button, gold border)
+Performance
+- Critical CSS inline máximo 5KB
+- Hero images WebP con srcset: 640w, 1024w, 1440w
+- Lazy load below the fold; hero should prefer preloading the LCP image with `<link rel="preload">` when deploying
 
-### 7. Trust Signals & Badges
-- **"TESTER GRATIS DESDE 24 UNIDADES"** badge:
-  - Gold background (#D4AF37)
-  - Navy text
-  - Small gift icon
-  - Positioned right of headline (or mobile: below)
+Canva Integration (instrucciones automáticas)
+Si canva_integration = true, Claude debe devolver `canva_template_instructions` con:
+- Paleta de colores
+- Tipografías y weights a usar
+- Layout guides (margins, safearea)
+- Export presets: PNG 2x (for assets), SVG for vector elements
+- Una lista de assets (nombres) que se pueden importar a Canva
 
-### 8. Micro-interactions (OVERDOSE)
-- **Fade-in on load**: Hero elements fade in smoothly (0.8s stagger)
-- **Parallax effect** (optional): Image moves slightly on scroll (subtle, not distracting)
-- **Hover on buttons**: Scale + shadow increase
-- **Text reveal**: Heading text typewriter reveal (optional, fast ~1.5s)
+Higgsfield Integration (pipeline metadata)
+Si higgsfield_integration = true, devolver `assets[]` con campos adicionales:
+- `uploaded`: false (el pipeline marcará true luego)
+- `lqip`: base64-placeholder hash o descriptor
+- `processing_instructions`: {resize: [640,1024,1440], compress: {webp:80}}
 
-### 9. Responsive Design
-- **Desktop (1440px+)**: Full hero, image 100% viewport height
-- **Tablet (768px–1439px)**: Image height 70–80vh, adjust spacing
-- **Mobile (< 768px)**:
-  - Stack hero elements vertically
-  - Image height 50–60vh (faster load)
-  - Font sizes scale down (H1: 36px)
-  - Buttons full-width (below image)
-  - Remove parallax (performance)
+A/B Variantes
+- Si variants > 1, devolver N variantes completas en `files[]` con sufijos `-variant-a`, `-variant-b`.
+- Variantes deben cambiar imagen / overlay / CTA text (no cambiar estructura base)
 
-### 10. Performance (CRITICAL)
-- **Image optimization**:
-  - WebP format (with fallback JPG)
-  - Multiple breakpoints: 640px, 1024px, 1440px
-  - Lazy load with LQIP (low-quality image placeholder)
-- **No hero image > 200KB** (responsive sizes)
-- **CSS animations**: Use `transform` + `opacity` only (GPU-accelerated)
-- **Load time target**: Hero fully rendered in < 1.2 seconds
+Ejemplo de prompt (para pegar en Claude Code)
 
-## Implementation Checklist
+"Generar hero premium para LAVERNE. brand_name: 'LAVERNE', headline: 'LAVERNE', subtitle: 'CATÁLOGO PROFESIONAL 2026', cta_primary: 'Ver catálogo completo', badge_text: 'TESTER GRATIS DESDE 24 UNIDADES', hero_image_description: 'man holding fragrance, warm cinematic lighting, shallow depth of field', variants: 2, output_format: 'both', canva_integration: true, higgsfield_integration: true"
 
-- [ ] Brand colors defined (Navy #1A3A52, Gold #D4AF37)
-- [ ] Fonts selected (Serif for headings, sans-serif for body)
-- [ ] Photography brief defined (composition, lighting, aspect ratio)
-- [ ] Hero HTML structure created (semantic, accessible)
-- [ ] CSS written (no hero image > 200KB, GPU-accelerated animations)
-- [ ] Responsive breakpoints tested (1440px, 768px, 375px)
-- [ ] Accessibility checked (color contrast ≥ 4.5:1, alt text, keyboard nav)
-- [ ] Performance verified (Lighthouse > 85, load < 1.2s)
-- [ ] A/B ready (CTA text variants, image variants tracked)
-- [ ] Mobile tested on real devices (iOS Safari, Android Chrome)
+Ejemplo de respuesta esperada (formato JSON - resumido)
 
-## Example HTML Structure
+{
+  "files": [
+    {"path":"hero.html","language":"html","content":"<section class=...>...</section>"},
+    {"path":"hero.css","language":"css","content":".hero{...}"},
+    {"path":"hero.liquid","language":"liquid","content":"{% comment %} ... %}"}
+  ],
+  "assets": [
+    {"name":"hero-640.webp","purpose":"lcp","srcset":["/assets/hero-640.webp 640w","/assets/hero-1024.webp 1024w","/assets/hero-1440.webp 1440w"],"processing_instructions":{"webp_quality":80,"max_width":1440}},
+  ],
+  "preview_html": "<html>...", 
+  "canva_template_instructions": "Create 1440x900 artboard, apply colors..."
+}
 
-```html
-<section class="hero" role="region" aria-label="Hero Section">
-  <div class="hero__image" style="background-image: url(...)">
-    <div class="hero__overlay"></div>
-  </div>
+Pruebas y checklist (rapido)
+- Ejecutar Lighthouse sobre `preview_html` o URL de staging
+- Ejecutar Axe accessibility
+- Validar manifest (assets exist and sizes within budget)
 
-  <div class="hero__content">
-    <div class="hero__brand">
-      <span class="hero__brand-text">ORIENT FRAGANCE</span>
-    </div>
+Notas de seguridad
+- Si el prompt incluye datos de usuarios (nombres, emails), Claude debe redactarlos en el output o señalizar la necesidad de consentimiento GDPR.
+- No embebas keys ni tokens. Mostrar placeholders en outputs (e.g., SHOPIFY_API_TOKEN_PLACEHOLDER).
 
-    <h1 class="hero__title">LAVERNE</h1>
-    <p class="hero__subtitle">CATÁLOGO PROFESIONAL 2026</p>
+---
 
-    <div class="hero__badge">
-      <span class="hero__badge-text">TESTER GRATIS DESDE 24 UNIDADES</span>
-    </div>
+## Implementation checklist (para humanos)
+- [ ] Validar outputs de Claude en staging
+- [ ] Subir assets a CDN o Higgsfield y reemplazar URLs en `files[]`
+- [ ] Revisar variantes A/B y elegir ganador tras 2 semanas
 
-    <button class="hero__cta hero__cta--primary">
-      Ver catálogo completo
-    </button>
-  </div>
-</section>
-```
+---
 
-## Related Skills
-
-- `ecommerce-product-grid` — Product showcase (after hero)
-- `performance-optimization` — Image & code optimization
-- `shopify-integration` — Connect hero CTA to Shopify collection
+Hecho. Pide ahora: "Genera un hero para LAVERNE" con parámetros; Claude Code devolverá archivos listos y assets manifestables.
